@@ -1,0 +1,14 @@
+.idea
+node_modules/
+.cache/
+public
+src/gatsby-types.d.ts
+
+.env
+.env.local
+.env.*.local
+
+
+.env.production
+.env.development
+.env.test

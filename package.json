@@ -1,0 +1,72 @@
+{
+  "name": "mamalama-referal",
+  "version": "1.0.0",
+  "private": true,
+  "description": "mamalama-referal",
+  "author": "QahNaaRlN",
+  "keywords": [
+    "gatsby"
+  ],
+  "scripts": {
+    "develop": "gatsby develop",
+    "start": "gatsby develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --ext .ts,.tsx",
+    "lint:fix": "eslint . --ext .ts,.tsx --fix"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^3.10.0",
+    "@types/react-input-mask": "^3.0.6",
+    "autoprefixer": "^10.4.20",
+    "clsx": "^2.1.1",
+    "dotenv": "^16.4.7",
+    "gatsby": "^5.14.1",
+    "gatsby-plugin-image": "^3.14.0",
+    "gatsby-plugin-manifest": "^5.14.0",
+    "gatsby-plugin-postcss": "^6.14.0",
+    "gatsby-plugin-sharp": "^5.14.0",
+    "gatsby-plugin-sitemap": "^6.14.0",
+    "gatsby-plugin-svgr": "^3.0.0-beta.0",
+    "gatsby-source-filesystem": "^5.14.0",
+    "gatsby-source-graphql": "^5.14.0",
+    "gatsby-transformer-sharp": "^5.14.0",
+    "lucide-react": "^0.469.0",
+    "postcss": "^8.4.49",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.54.2",
+    "react-input-mask": "^2.0.4",
+    "tailwind-merge": "^2.6.0",
+    "tailwindcss": "^3.4.17",
+    "yup": "^1.6.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.12",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "depcheck": "^1.4.7",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-import-resolver-typescript": "^3.6.1",
+    "eslint-plugin-boundaries": "^5.0.1",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-n": "^16.6.2",
+    "eslint-plugin-promise": "^6.6.0",
+    "eslint-plugin-react": "^7.37.4",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "gatsby-plugin-alias-imports": "^1.0.5",
+    "prettier": "^3.4.2",
+    "prettier-plugin-tailwindcss": "^0.6.9",
+    "typescript": "~5.3.3"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}

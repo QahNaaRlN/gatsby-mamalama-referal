@@ -1,0 +1,1 @@
+export type { LayoutProps, HeaderProps, FooterProps } from './types';

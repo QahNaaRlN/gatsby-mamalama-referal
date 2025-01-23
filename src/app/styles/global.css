@@ -1,0 +1,113 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Reset */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* HTML5 display-role reset */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+    display: block;
+}
+
+body {
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    overflow-wrap: break-word;
+}
+
+/* Remove list styles */
+ul,
+ol {
+    list-style: none;
+}
+
+/* Remove link decoration */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Remove button styles */
+button {
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+/* Remove table spacing */
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+@layer components {
+    .btn-primary {
+        @apply bg-teal-700 text-white hover:bg-blue-700 focus:ring-blue-500;
+    }
+
+    .btn-secondary {
+        @apply bg-gray-600 text-white hover:bg-gray-700 focus:ring-gray-500;
+    }
+
+    .btn-outline {
+        @apply border-2 border-blue-600 text-blue-600 hover:bg-blue-50 focus:ring-blue-500;
+    }
+
+    .btn-ghost {
+        @apply text-blue-600 hover:bg-blue-50 focus:ring-blue-500;
+    }
+
+    .btn-sm {
+        @apply text-sm px-3 py-1.5;
+    }
+
+    .btn-md {
+        @apply text-base px-4 py-2;
+    }
+
+    .btn-lg {
+        @apply text-lg leading-relaxed px-6 py-3 tracking-tight;
+    }
+}

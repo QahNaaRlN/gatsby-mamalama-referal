@@ -1,0 +1,9 @@
+.cache
+public
+node_modules
+coverage
+dist
+build
+.gatsby
+static
+*.d.ts

@@ -1,0 +1,10 @@
+export { ReactComponent as LogoHeaderIcon } from "./logo-header.svg";
+export { ReactComponent as PhoneIcon } from "./phone.svg";
+export { ReactComponent as TelegramIcon } from "./tg.svg";
+export { ReactComponent as WhatsAppIcon } from "./whatsapp.svg";
+export { ReactComponent as JacketIcon } from "./jacket.svg";
+export { ReactComponent as LinenIcon } from "./linen.svg";
+export { ReactComponent as TShirtIcon } from "./t-shirt.svg";
+export { ReactComponent as TowelIcon } from "./towel.svg";
+export { ReactComponent as WashingMachineIcon } from "./washing-machine.svg";
+export { ReactComponent as LogoFooterIcon } from "./logo-footer.svg";
