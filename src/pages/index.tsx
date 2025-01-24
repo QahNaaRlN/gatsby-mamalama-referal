@@ -3,20 +3,14 @@ import { StaticImage } from "gatsby-plugin-image";
 import React from "react";
 
 import { ServiceCards } from "@/widgets/service-cards/ui/ServiceCards";
-import {
-  mockFAQData,
-  transformStrapiData,
-} from "@entities/faq/lib/transform-strapi-data";
-import { FaqAccordion } from "@features/faq-content";
 import { Button } from "@ui/button";
+import { FAQSection } from "@widgets/faq/ui";
 import { Layout } from "@widgets/layout";
 
 import type { HomePageData } from "./model/types";
 
 
-
 const HomePage: React.FC<PageProps<HomePageData>> = () => {
-  const faqItems = transformStrapiData(mockFAQData);
 
   return (
     <Layout>
@@ -145,16 +139,7 @@ const HomePage: React.FC<PageProps<HomePageData>> = () => {
           </a>
         </div>
       </section>
-      <section className="py-16">
-        <div className="container">
-          <div className="flex justify-between">
-            <h2 className="text-4xl font-medium leading-snug text-neutral-900">
-              Частые вопросы
-            </h2>
-            <FaqAccordion items={faqItems} />
-          </div>
-        </div>
-      </section>
+      <FAQSection/>
     </Layout>
   );
 };

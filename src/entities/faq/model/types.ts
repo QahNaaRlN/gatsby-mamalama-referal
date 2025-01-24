@@ -1,8 +1,5 @@
-export interface StrapiData {
-  id: string;
-  attributes: {
-    question: string;
-    answer: string;
-    order: number;
-  };
+export interface FAQ {
+  documentId: string;
+  question: string;
+  answer: string;
 }
