@@ -1,9 +1,26 @@
-import React from "react";
-
 import { Loader2 } from "lucide-react";
+import React, { ButtonHTMLAttributes } from "react";
 import { twMerge } from "tailwind-merge";
 
-import { ButtonProps } from "../../model/button/types";
+
+export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  /**
+   * Вариант стилизации кнопки
+   */
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost';
+  /**
+   * Размер кнопки
+   */
+  size?: 'sm' | 'md' | 'lg';
+  /**
+   * Состояние загрузки
+   */
+  isLoading?: boolean;
+  /**
+   * Растягивать ли кнопку на всю ширину контейнера
+   */
+  fullWidth?: boolean;
+}
 
 export const Button: React.FC<ButtonProps> = ({
   variant = "primary",

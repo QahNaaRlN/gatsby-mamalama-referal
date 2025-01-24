@@ -10,7 +10,6 @@ import { type StandardCardProps } from '@entities/service/model/types'
 import { DiscountBadge } from '@entities/service/ui/DiscountBadge'
 import { PriceDisplay } from '@entities/service/ui/PriceDisplay'
 import { getStrapiUrl } from "@lib/strapi/media";
-import { useDebugValue } from '@shared/hooks/useDebugValue'
 import { Icon } from '@ui/icon'
 
 
@@ -18,8 +17,6 @@ import { Icon } from '@ui/icon'
  * Компонент стандартной карточки сервиса
  */
 export const StandardCard: React.FC<StandardCardProps> = ({ service }) => {
-
-  useDebugValue(service, 'StandardCard service')
 
   const {
     title,

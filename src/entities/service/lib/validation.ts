@@ -1,114 +1,102 @@
+// entities/service/lib/validateService.ts
 /**
- * @fileoverview Функции валидации для сервисов
+ * @fileoverview Валидация для сущности "Сервис".
  */
 
-import { ServiceType } from '../model/consts';
-import type { Service, StandardService, SpecialService } from '../model/types';
+import { ServiceType } from '@entities/service/model/consts';
+import type { Service, StandardService, SpecialService, PriceListItem } from '@entities/service/model/types';
+import {
+  validateIsObject,
+  validateStringField,
+  validateNumberField,
+  validateArrayField,
+  ValidationError,
+} from '@shared/lib/validation';
 
 /**
- * Ошибка валидации сервиса
+ * Проверяет обязательные поля, которые есть у всех сервисов.
  */
-export class ServiceValidationError extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = 'ServiceValidationError';
-  }
-}
-
-/**
- * Проверяет обязательные поля сервиса
- */
-const validateBaseFields = (service: unknown): void => {
-  if (!service || typeof service !== 'object') {
-    throw new ServiceValidationError('Service must be an object');
-  }
+const validateServiceBaseFields = (service: unknown): void => {
+  validateIsObject(service, 'Service');
 
   const s = service as Partial<Service>;
 
-  if (!s.documentId) {
-    throw new ServiceValidationError('Service must have a documentId');
-  }
-  if (!s.title) {
-    throw new ServiceValidationError('Service must have a title');
-  }
-  if (!s.type) {
-    throw new ServiceValidationError('Service must have a type');
-  }
-}
+  validateStringField(s.documentId, 'Document ID');
+  validateStringField(s.title, 'Title');
+  validateStringField(s.type, 'Type');
+};
 
 /**
- * Проверяет тип данных для числовых полей
- */
-const validateNumberField = (value: unknown, fieldName: string): void => {
-  if (value !== undefined && typeof value !== 'number') {
-    throw new ServiceValidationError(`${fieldName} must be a number if provided`);
-  }
-}
-
-/**
- * Проверяет опциональные поля цены
+ * Проверяет поля, связанные с ценой.
  */
 const validatePriceFields = (price: unknown): void => {
-  if (!price || typeof price !== 'object') {
-    throw new ServiceValidationError('Price info must be an object');
-  }
+  validateIsObject(price, 'Price info');
 
-  const p = price as Partial<StandardService>;
+  const p = price as Partial<{ price: number; finalPrice: number; discount: number }>;
 
   validateNumberField(p.price, 'Price');
   validateNumberField(p.finalPrice, 'Final price');
   validateNumberField(p.discount, 'Discount');
-}
+};
 
 /**
- * Проверяет стандартный сервис
+ * Проверяет элемент прайс-листа.
  */
-export const validateStandardService = (service: unknown): void => {
-  validateBaseFields(service);
+const validatePriceListItem = (item: unknown): void => {
+  validateIsObject(item, 'Price list item');
 
-  const s = service as StandardService;
-  validatePriceFields(s);
+  const i = item as Partial<PriceListItem>;
+
+  validateStringField(i.title, 'Title');
+  validatePriceFields(i);
+};
+
+/**
+ * Валидирует стандартный сервис.
+ */
+export const validateStandardService = (service: unknown): StandardService => {
+  validateServiceBaseFields(service);
+
+  const s = service as Partial<StandardService>;
 
   if (s.type !== ServiceType.STANDARD) {
-    throw new ServiceValidationError('Invalid service type for standard service');
+    throw new ValidationError('Invalid service type for standard service');
   }
-}
+
+  validatePriceFields(s);
+
+  return s as StandardService;
+};
 
 /**
- * Проверяет специальный сервис
+ * Валидирует специальный сервис.
  */
-export const validateSpecialService = (service: unknown): void => {
-  validateBaseFields(service);
+export const validateSpecialService = (service: unknown): SpecialService => {
+  validateServiceBaseFields(service);
 
-  const s = service as SpecialService;
+  const s = service as Partial<SpecialService>;
 
   if (s.type !== ServiceType.SPECIAL) {
-    throw new ServiceValidationError('Invalid service type for special service');
+    throw new ValidationError('Invalid service type for special service');
   }
 
-  if (!Array.isArray(s.priceList)) {
-    throw new ServiceValidationError('Special service must have a price list array');
-  }
+  validateArrayField(s.priceList, 'Price list');
+  s.priceList?.forEach((item) => validatePriceListItem(item));
 
-  s.priceList.forEach((item, index) => {
-    if (!item.title) {
-      throw new ServiceValidationError(`Price list item ${index} must have a title`);
-    }
-    validatePriceFields(item);
-  });
-}
+  return s as SpecialService;
+};
 
 /**
- * Валидирует сервис в зависимости от его типа
+ * Валидирует сервис в зависимости от его типа.
  */
-export const validateService = (service: unknown): void => {
-  validateBaseFields(service);
+export const validateService = (service: unknown): Service => {
+  validateServiceBaseFields(service);
 
   const s = service as Service;
 
   if (s.type === ServiceType.SPECIAL) {
-    validateSpecialService(s);
+    return validateSpecialService(s);
   } else {
-    validateStandardService(s);
+    return validateStandardService(s);
   }
 };

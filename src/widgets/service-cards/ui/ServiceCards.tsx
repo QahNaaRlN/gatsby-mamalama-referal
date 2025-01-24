@@ -18,7 +18,7 @@ import { type ServiceCardsProps } from '../model/types';
  * В процессе загрузки показывает спиннер, при ошибке - сообщение об ошибке.
  */
 export const ServiceCards: React.FC<ServiceCardsProps> = () => {
-  const { services, error, loading } = useServices();
+  const { data, error, loading } = useServices();
 
   if (loading) {
     return <Spinner />;
@@ -32,7 +32,7 @@ export const ServiceCards: React.FC<ServiceCardsProps> = () => {
     );
   }
 
-  const { special, standard } = groupServicesByType(services);
+  const { special, standard } = groupServicesByType(data);
 
   return (
     <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">

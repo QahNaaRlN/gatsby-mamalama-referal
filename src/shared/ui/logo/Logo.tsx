@@ -1,8 +1,15 @@
-import { CSSProperties } from "react";
+import React, { CSSProperties } from "react";
 
 import { ReactComponent as LogoIcon } from "@shared/assets/icons/logo-header.svg";
 
-import { LogoProps } from "../../model/logo/types";
+
+export interface LogoProps extends React.SVGProps<SVGSVGElement> {
+  primaryFill?: string;
+  secondaryFill?: string;
+  className?: string;
+  style?: CSSProperties;
+}
+
 
 export const Logo = ({
   primaryFill = "currentColor",
