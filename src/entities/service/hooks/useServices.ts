@@ -16,7 +16,5 @@ export const useServices = () => {
     }
   `);
 
-  console.log('Data from GraphQL:', data);
-
   return useProcessData<Service>(data.strapi.services, validateService);
 };

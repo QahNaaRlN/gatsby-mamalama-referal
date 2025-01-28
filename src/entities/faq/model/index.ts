@@ -1,1 +1,1 @@
-export * from "./types";
+export type { FAQ } from "./types";

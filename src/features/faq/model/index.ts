@@ -1,0 +1,1 @@
+export type { FAQListProps } from "./types";

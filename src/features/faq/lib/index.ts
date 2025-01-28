@@ -1,1 +1,3 @@
-export * from './selectors';
+export {
+  selectAllFAQs
+} from './selectors';

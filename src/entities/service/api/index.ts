@@ -1,1 +1,6 @@
-export * from './fragments'
+export {
+  imageFields,
+  priceListItemFields, 
+  serviceBaseFields,
+  serviceFields 
+} from './fragments';

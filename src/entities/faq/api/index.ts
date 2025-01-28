@@ -1,0 +1,1 @@
+export { faqFields } from './fragments';

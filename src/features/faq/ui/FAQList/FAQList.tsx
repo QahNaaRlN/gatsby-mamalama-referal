@@ -1,21 +1,32 @@
 import { ChevronDown } from "lucide-react";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React, { useState } from "react";
 
-import { FAQ } from "@entities/faq/model/types";
+import { useFAQ } from "@entities/faq";
 import { selectAllFAQs } from "@features/faq/lib";
+import { FAQListProps } from "@features/faq/model";
+import { ErrorMessage } from "@ui/error";
+import { Spinner } from "@ui/spinner";
 
-export interface FAQListProps {
-  faqs: FAQ[];
-}
+export const FAQList: React.FC<FAQListProps> = () => {
 
-export const FAQList = ({ faqs }: FAQListProps) => {
-  const allFAQs = selectAllFAQs(faqs);
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const handleToggle = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
   };
+  const { data, error, loading } = useFAQ();
+  const allFAQs = selectAllFAQs(data);
+  if (loading) {
+    return <Spinner />;
+  }
+
+  if (error) {
+    return (
+      <ErrorMessage
+        message="Произошла ошибка при загрузке сервисов. Пожалуйста, попробуйте позже."
+      />
+    );
+  }
 
   return (
     <div className="w-full max-w-3xl">

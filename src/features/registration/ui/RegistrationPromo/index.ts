@@ -1,0 +1,1 @@
+export { RegistrationPromo } from './RegistrationPromo';

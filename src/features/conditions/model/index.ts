@@ -1,0 +1,1 @@
+export type { ConditionsCardsProps } from './types';
