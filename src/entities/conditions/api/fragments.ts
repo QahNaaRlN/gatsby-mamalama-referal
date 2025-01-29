@@ -1,4 +1,4 @@
-import { graphql } from 'gatsby';
+import { graphql } from "gatsby";
 
 export const conditionFields = graphql`
   fragment ConditionFields on Strapi_ConditionContent {
@@ -7,7 +7,7 @@ export const conditionFields = graphql`
     description
     isActive
     condition {
-      id
+      documentId
     }
     site {
       domain

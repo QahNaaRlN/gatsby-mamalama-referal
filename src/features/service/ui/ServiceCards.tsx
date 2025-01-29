@@ -27,7 +27,7 @@ export const ServiceCards: React.FC<ServiceCardsProps> = () => {
   if (error) {
     return (
       <ErrorMessage
-        message="Произошла ошибка при загрузке сервисов. Пожалуйста, попробуйте позже."
+        message={error.message}
       />
     );
   }

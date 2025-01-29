@@ -4,7 +4,7 @@ export interface ConditionBase {
   description: object;
   isActive: boolean;
   condition: {
-    id: string;
+    documentId: string;
   };
   site: {
     domain: string;

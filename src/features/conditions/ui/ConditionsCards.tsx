@@ -18,8 +18,6 @@ import { Spinner } from '@ui/spinner';
 export const ConditionsCards: React.FC<ConditionsCardsProps> = () => {
   const { data, error, loading } = useConditions();
 
-  console.log(data)
-
   if (loading) {
     return <Spinner />;
   }

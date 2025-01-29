@@ -9,7 +9,9 @@ import { CURRENCY } from '@entities/service/model/consts'
 import { type StandardCardProps } from '@entities/service/model/types'
 import { DiscountBadge } from '@entities/service/ui/DiscountBadge'
 import { PriceDisplay } from '@entities/service/ui/PriceDisplay'
+import { renderRichText } from "@lib/renderRichText/renderRichText";
 import { getStrapiUrl } from "@lib/strapi/media";
+import { useRenderCount } from "@shared/hooks/useRenderCount";
 import { Icon } from '@ui/icon'
 
 
@@ -32,6 +34,16 @@ export const StandardCard: React.FC<StandardCardProps> = ({ service }) => {
 
   const imageUrl = picture?.url ? getStrapiUrl(picture.url) : '/default-service-icon.svg';
 
+  const renderCount = useRenderCount({ service }, {
+    name: 'StandardCard',
+    logProps: true
+  });
+
+  // Если количество рендеров превышает разумный порог
+  if (renderCount > 10) {
+    console.warn(`[Warning] SomeComponent rendered more than 10 times`);
+  }
+
   return (
     <div className="inline-flex flex-col items-start justify-start gap-5 rounded-3xl bg-white px-6 pb-8 pt-7 shadow-custom">
       <div className="relative">
@@ -50,7 +62,7 @@ export const StandardCard: React.FC<StandardCardProps> = ({ service }) => {
       </h3>
 
       <span className="text-base font-normal leading-snug text-neutral-900">
-        {description}
+        {renderRichText(description)}
       </span>
 
       <PriceDisplay

@@ -53,11 +53,15 @@ interface ServiceBase {
   /** Название сервиса */
   title: string;
   /** Описание сервиса */
-  description: string;
+  description: object;
   /** Длительность в днях */
   duration: number;
   /** Тип сервиса */
   type: ServiceTypeEnum;
+  site: {
+    domain: string;
+    siteName: string;
+  };
 }
 
 /**

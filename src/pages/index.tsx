@@ -8,12 +8,13 @@ import { ServiceSection } from "@widgets/service-section/ui/ServiceSection/Servi
 
 import type { HomePageData } from "./model/types";
 
+import '@app/styles';
+
 
 const HomePage: React.FC<PageProps<HomePageData>> = () => {
 
   return (
     <Layout>
-
       <ServiceSection />
       <ConditionsSection />
       <FAQSection />

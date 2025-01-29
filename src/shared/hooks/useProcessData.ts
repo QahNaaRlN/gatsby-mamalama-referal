@@ -1,45 +1,44 @@
-import {useState, useEffect} from 'react';
+import { useMemo } from "react";
 
 interface UseProcessDataResult<T> {
-    data: T[];
-    error: Error | null;
-    loading: boolean;
+  data: T[];
+  error: Error | null;
+  loading: boolean;
 }
 
-interface SiteData {
-  site: {
+interface RawDataItem<T> {
+  documentId: string;
+  site?: {
     domain: string;
+    siteName: string;
   };
+  additionalData: T;
 }
 
-export const useProcessData = <T, R extends SiteData = SiteData>(
-    rawData: R[],
-    validate: (data: R) => T,
-    domain?: string
+export const useProcessData = <T>(
+  rawData: RawDataItem<T>[],
+  validate: (data: T) => T,
+  domain?: string
 ): UseProcessDataResult<T> => {
-  const [error, setError] = useState<Error | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [data, setData] = useState<T[]>([]);
-
-  useEffect(() => {
+  return useMemo(() => {
     try {
-      console.log('Raw data before validation:', rawData);
-
       const filteredData = domain
-          ? rawData.filter((item) => item.site.domain === domain)
-          : rawData;
+        ? rawData.filter((item) => item.site?.domain === domain)
+        : rawData;
 
-      const validatedData = filteredData.map((item) => validate(item));
-      console.log('Validated data:', validatedData);
-      setData(validatedData);
-      setError(null);
+      const validatedData = filteredData.map((item) => validate(item.additionalData));
+
+      return {
+        data: validatedData,
+        error: null,
+        loading: false
+      };
     } catch (err) {
-      console.error('Validation error:', err);
-      setError(err instanceof Error ? err : new Error('Неизвестная ошибка при обработке данных'));
-    } finally {
-      setLoading(false);
+      return {
+        data: [],
+        error: err instanceof Error ? err : new Error("Неизвестная ошибка при обработке данных"),
+        loading: false
+      };
     }
-  }, [rawData, validate, domain]);
-
-  return { data, error, loading };
+  }, [rawData, validate, domain]); // Теперь зависимости без мемоизированных функций
 };

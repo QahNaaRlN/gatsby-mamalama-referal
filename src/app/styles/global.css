@@ -2,84 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Reset */
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-/* HTML5 display-role reset */
-article,
-aside,
-details,
-figcaption,
-figure,
-footer,
-header,
-hgroup,
-menu,
-nav,
-section {
-    display: block;
-}
-
-body {
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
-}
-
-img,
-picture,
-video,
-canvas,
-svg {
-    display: block;
-    max-width: 100%;
-}
-
-input,
-button,
-textarea,
-select {
-    font: inherit;
-}
-
-p,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    overflow-wrap: break-word;
-}
-
-/* Remove list styles */
-ul,
-ol {
-    list-style: none;
-}
-
-/* Remove link decoration */
-a {
-    text-decoration: none;
-    color: inherit;
-}
-
-/* Remove button styles */
-button {
-    border: none;
-    background: none;
-    cursor: pointer;
-}
-
-/* Remove table spacing */
-table {
-    border-collapse: collapse;
-    border-spacing: 0;
+@layer base {
+    /* Здесь могут быть базовые стили */
 }
 
 @layer components {
@@ -110,4 +34,8 @@ table {
     .btn-lg {
         @apply text-lg leading-relaxed px-6 py-3 tracking-tight;
     }
+}
+
+@layer utilities {
+    /* Здесь могут быть кастомные утилиты */
 }

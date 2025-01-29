@@ -1,5 +1,5 @@
 import { ChevronDown } from "lucide-react";
-import React, { useState } from "react";
+import React, { useState, useCallback, useMemo } from "react";
 
 import { useFAQ } from "@entities/faq";
 import { selectAllFAQs } from "@features/faq/lib";
@@ -7,15 +7,16 @@ import { FAQListProps } from "@features/faq/model";
 import { ErrorMessage } from "@ui/error";
 import { Spinner } from "@ui/spinner";
 
-export const FAQList: React.FC<FAQListProps> = () => {
-
+export const FAQList: React.FC<FAQListProps> = React.memo(() => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
-  const handleToggle = (index: number) => {
-    setOpenIndex(openIndex === index ? null : index);
-  };
+  const handleToggle = useCallback((index: number) => {
+    setOpenIndex(prev => prev === index ? null : index);
+  }, []);
+
   const { data, error, loading } = useFAQ();
-  const allFAQs = selectAllFAQs(data);
+  const allFAQs = useMemo(() => selectAllFAQs(data), [data]);
+
   if (loading) {
     return <Spinner />;
   }
@@ -59,4 +60,6 @@ export const FAQList: React.FC<FAQListProps> = () => {
       ))}
     </div>
   );
-};
+});
+
+FAQList.displayName = 'FAQList';
