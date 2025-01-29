@@ -1,1 +1,1 @@
-export type { Condition } from "./types";
+export type { ConditionBase } from "./types";

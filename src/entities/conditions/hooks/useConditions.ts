@@ -1,20 +1,22 @@
 import { useStaticQuery, graphql } from 'gatsby';
 
 import { validateCondition } from "@entities/conditions";
-import { Condition } from "@entities/conditions/model";
+import { ConditionBase } from "@entities/conditions/model";
 import { useProcessData } from '@shared/hooks/useProcessData';
-
+import { getCurrentDomain } from '@shared/lib/domain';
 
 export const useConditions = () => {
+  const domain = getCurrentDomain();
+
   const data = useStaticQuery(graphql`
     query ConditionsQuery {
       strapi {
-        conditions {
+        conditionContents {
           ...ConditionFields
         }
       }
     }
   `);
 
-  return useProcessData<Condition>(data.strapi.conditions, validateCondition);
+  return useProcessData<ConditionBase>(data.strapi.conditionContents, validateCondition, domain);
 };

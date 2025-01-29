@@ -1,8 +1,6 @@
 import type { HeadFC, PageProps } from "gatsby";
-import { StaticImage } from "gatsby-plugin-image";
 import React from "react";
 
-import { Button } from "@ui/button";
 import { ConditionsSection } from "@widgets/conditions-section/ui";
 import { FAQSection } from "@widgets/faq-section/ui";
 import { Layout } from "@widgets/layout";

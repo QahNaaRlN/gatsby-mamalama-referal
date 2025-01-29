@@ -3,6 +3,13 @@ export interface ConditionBase {
   title: string;
   description: object;
   isActive: boolean;
+  condition: {
+    id: string;
+  };
+  site: {
+    domain: string;
+    siteName: string;
+  };
 }
 
 /** Пропсы для компонента карточки условий */

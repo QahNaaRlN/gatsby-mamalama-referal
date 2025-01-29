@@ -1,0 +1,1 @@
+export { getCurrentDomain } from './getCurrentDomain'

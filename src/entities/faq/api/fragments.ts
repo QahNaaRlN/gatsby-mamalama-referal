@@ -6,5 +6,12 @@ export const faqFields = graphql`
     question
     answer
     isExpanded
+    faq {
+      id
+    }
+    site {
+      domain
+      siteName
+    }
   }
 `;
