@@ -1,0 +1,1 @@
+export { validatePhone, validateName, validateRegFormPromo } from './validateRegFormPromo';

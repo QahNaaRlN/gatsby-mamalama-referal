@@ -1,0 +1,1 @@
+export { regFormPromoFields } from './fragments';

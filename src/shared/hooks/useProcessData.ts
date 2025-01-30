@@ -40,5 +40,5 @@ export const useProcessData = <T>(
         loading: false
       };
     }
-  }, [rawData, validate, domain]); // Теперь зависимости без мемоизированных функций
+  }, [rawData, validate, domain]);
 };

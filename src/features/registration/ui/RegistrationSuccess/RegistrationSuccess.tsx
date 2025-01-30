@@ -1,7 +1,5 @@
 import React from 'react';
 
-import styles from './RegistrationSuccess.module.scss';
-
 export const RegistrationSuccess: React.FC = () => {
   return (
     <div className={styles.registrationSuccess}>

@@ -13,7 +13,7 @@ export class ValidationError extends Error {
  * Проверяет, что объект существует и является объектом.
  */
 export const validateIsObject = (entity: unknown, entityName: string): void => {
-  console.log(`Проверка объекта для ${entityName}:`, entity);
+  // console.log(`Проверка объекта для ${entityName}:`, entity);
   if (!entity || typeof entity !== 'object') {
     console.error(`${entityName} должен быть объектом`);
     throw new ValidationError(`${entityName} must be an object`);
@@ -24,7 +24,7 @@ export const validateIsObject = (entity: unknown, entityName: string): void => {
  * Проверяет, что значение является строкой (если оно предоставлено).
  */
 export const validateStringField = (value: unknown, fieldName: string): void => {
-  console.log(`Проверка строки для поля ${fieldName}:`, value);
+  // console.log(`Проверка строки для поля ${fieldName}:`, value);
   if (value !== undefined && typeof value !== 'string') {
     console.error(`${fieldName} должен быть строкой, если он предоставлен`);
     throw new ValidationError(`${fieldName} must be a string if provided`);
@@ -35,7 +35,7 @@ export const validateStringField = (value: unknown, fieldName: string): void => 
  * Проверяет, что значение является числом (если оно предоставлено).
  */
 export const validateNumberField = (value: unknown, fieldName: string): void => {
-  console.log(`Проверка числа для поля ${fieldName}:`, value);
+  // console.log(`Проверка числа для поля ${fieldName}:`, value);
   if (value !== undefined && typeof value !== 'number') {
     console.error(`${fieldName} должен быть числом, если он предоставлен`);
     throw new ValidationError(`${fieldName} must be a number if provided`);
@@ -46,7 +46,7 @@ export const validateNumberField = (value: unknown, fieldName: string): void => 
  * Проверяет, что значение является массивом (если оно предоставлено).
  */
 export const validateArrayField = (value: unknown, fieldName: string): void => {
-  console.log(`Проверка массива для поля ${fieldName}:`, value);
+  // console.log(`Проверка массива для поля ${fieldName}:`, value);
   if (value !== undefined && !Array.isArray(value)) {
     console.error(`${fieldName} должен быть массивом, если он предоставлен`);
     throw new ValidationError(`${fieldName} must be an array if provided`);
@@ -57,7 +57,7 @@ export const validateArrayField = (value: unknown, fieldName: string): void => {
  * Проверяет, что значение является объектом (для rich text полей).
  */
 export const validateRichTextField = (value: unknown, fieldName: string): void => {
-  console.log(`Проверка rich text для поля ${fieldName}:`, value);
+  // console.log(`Проверка rich text для поля ${fieldName}:`, value);
 
   // Пропускаем undefined и null значения
   if (value === undefined || value === null) {
