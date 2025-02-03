@@ -1,139 +1,100 @@
-import { LucideIcon } from 'lucide-react';
-import { forwardRef , InputHTMLAttributes } from 'react';
+import React, { forwardRef, InputHTMLAttributes } from 'react';
+import InputMask from 'react-input-mask';
 import { twMerge } from 'tailwind-merge';
 
-export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
+/**
+ * @typedef {Object} InputProps
+ * @extends {Omit<InputHTMLAttributes<HTMLInputElement>, 'size'>}
+ * @property {string} [mask] - Маска для форматирования вводимых данных. Например: "+7 (999) 999-99-99" для телефона
+ */
+
+/**
+ * Компонент Input представляет собой обертку над стандартным HTML-элементом input с поддержкой масок ввода.
+ *
+ * @component
+ * @example
+ * // Базовое использование
+ * <Input placeholder="Введите текст" />
+ *
+ * @example
+ * // Использование с маской для телефона
+ * <Input
+ *   mask="+7 (999) 999-99-99"
+ *   placeholder="Введите номер телефона"
+ *   onChange={(e) => console.log(e.target.value)}
+ * />
+ *
+ * @example
+ * // Использование с пользовательскими стилями
+ * <Input
+ *   className="custom-input-class"
+ *   disabled={false}
+ *   placeholder="Пользовательские стили"
+ * />
+ */
+export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   /**
-   * Размер инпута
+   * Маска для input. Используется для форматирования вводимых данных.
+   * Поддерживает следующие символы:
+   * - 9: цифра от 0 до 9
+   * - a: буква (A-Z, a-z)
+   * - *: буква или цифра
+   *
+   * @example "+7 (999) 999-99-99" // маска для номера телефона
+   * @example "99.99.9999" // маска для даты
    */
-  size?: 'sm' | 'md' | 'lg';
-  /**
-   * Иконка слева
-   */
-  leftIcon?: LucideIcon;
-  /**
-   * Иконка справа
-   */
-  rightIcon?: LucideIcon;
-  /**
-   * Состояние ошибки
-   */
-  error?: string;
-  /**
-   * Текст подсказки под инпутом
-   */
-  helperText?: string;
-  /**
-   * Лейбл над инпутом
-   */
-  label?: string;
-  /**
-   * Растягивать ли инпут на всю ширину контейнера
-   */
-  fullWidth?: boolean;
+  mask?: string;
 }
 
+/**
+ * Компонент Input с поддержкой ref.
+ *
+ * @param {InputProps} props - Свойства компонента
+ * @param {React.Ref<HTMLInputElement>} ref - Реф для доступа к DOM-элементу input
+ * @returns {React.ReactElement} React элемент
+ */
 export const Input = forwardRef<HTMLInputElement, InputProps>(({
-                                                                 size = 'md',
-                                                                 leftIcon: LeftIcon,
-                                                                 rightIcon: RightIcon,
-                                                                 error,
-                                                                 helperText,
-                                                                 label,
-                                                                 fullWidth = false,
                                                                  className,
+                                                                 mask,
                                                                  disabled,
                                                                  ...props
                                                                }, ref) => {
-  const baseStyles = 'transition-colors bg-white border rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
-
-  const sizeStyles = {
-    sm: 'px-3 py-1.5 text-sm',
-    md: 'px-4 py-2 text-base',
-    lg: 'px-6 py-3 text-lg',
-  };
-
-  const iconSizeStyles = {
-    sm: 'w-4 h-4',
-    md: 'w-5 h-5',
-    lg: 'w-6 h-6',
-  };
-
-  const paddingWithIcon = {
-    left: {
-      sm: 'pl-9',
-      md: 'pl-11',
-      lg: 'pl-14',
-    },
-    right: {
-      sm: 'pr-9',
-      md: 'pr-11',
-      lg: 'pr-14',
-    },
-  };
-
-  const containerStyles = twMerge(
-    'relative inline-block',
-    fullWidth && 'w-full',
-  );
-
+  /**
+   * Базовые стили компонента с использованием Tailwind CSS
+   */
   const inputStyles = twMerge(
-    baseStyles,
-    sizeStyles[size],
-    error
-      ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
-      : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500',
-    LeftIcon && paddingWithIcon.left[size],
-    RightIcon && paddingWithIcon.right[size],
-    fullWidth && 'w-full',
+    'w-full py-3 bg-white rounded-xl shadow-custom border border-slate-300 justify-start items-start gap-2 inline-flex px-3 hover:border-teal-700 focus:border-teal-700 focus-visible:border-teal-700 active:border-teal-700 focus-visible:outline-none',
     className
   );
 
-  const iconBaseStyles = 'absolute top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none';
-  const leftIconStyles = 'left-3';
-  const rightIconStyles = 'right-3';
+  if (mask) {
+    return (
+      <InputMask
+        mask={mask}
+        maskChar="_"
+        disabled={disabled}
+        {...props}
+      >
+        {(inputProps: any) => (
+          <input
+            {...inputProps}
+            ref={ref}
+            className={inputStyles}
+          />
+        )}
+      </InputMask>
+    );
+  }
 
   return (
-    <div className="w-full">
-      {label && (
-        <label className="block mb-2 text-sm font-medium text-gray-700">
-          {label}
-        </label>
-      )}
-      <div className={containerStyles}>
-        {LeftIcon && (
-          <LeftIcon
-            className={twMerge(
-              iconBaseStyles,
-              leftIconStyles,
-              iconSizeStyles[size]
-            )}
-          />
-        )}
-        <input
-          ref={ref}
-          disabled={disabled}
-          className={inputStyles}
-          {...props}
-        />
-        {RightIcon && (
-          <RightIcon
-            className={twMerge(
-              iconBaseStyles,
-              rightIconStyles,
-              iconSizeStyles[size]
-            )}
-          />
-        )}
-      </div>
-      {(error || helperText) && (
-        <div className={twMerge(
-          'mt-1 text-sm',
-          error ? 'text-red-500' : 'text-gray-500'
-        )}>
-          {error || helperText}
-        </div>
-      )}
-    </div>
+    <input
+      ref={ref}
+      disabled={disabled}
+      className={inputStyles}
+      {...props}
+    />
   );
 });
+
+// Добавляем отображаемое имя компонента для улучшения отладки
+Input.displayName = 'Input';

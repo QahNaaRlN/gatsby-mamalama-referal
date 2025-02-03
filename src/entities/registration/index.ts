@@ -1,1 +1,1 @@
-export { RegForm } from './ui/RegForm';
+export { RegForm } from './ui/RegForm/RegForm';

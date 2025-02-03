@@ -4,13 +4,13 @@ import { LogoHeaderIcon, PhoneIcon, TelegramIcon } from "@shared/assets/icons";
 
 export const Header: React.FC = () => {
   return (
-    <header className="bg-cyan-300">
-      <div className="mx-auto flex max-w-[81rem] items-center justify-between py-8">
+    <header className="bg-cyan-300 py-6 px-4">
+      <div className="mx-auto flex max-w-[81rem] items-center justify-center md:justify-between">
         <div className="flex items-center gap-12">
           <a href="https://mamalama.kz">
             <LogoHeaderIcon className="h-11 w-44" />
           </a>
-          <nav className="flex items-center gap-12">
+          <nav className="items-center gap-12 hidden md:flex">
             <a
               href="#"
               className="text-base font-medium leading-snug text-neutral-900"
@@ -31,7 +31,7 @@ export const Header: React.FC = () => {
             </a>
           </nav>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="md:flex items-center gap-4 hidden">
           <a
             href="#"
             className="inline-flex h-8 w-8 items-center justify-center gap-2.5 overflow-hidden rounded-md bg-blue-700"

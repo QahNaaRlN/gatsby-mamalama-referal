@@ -1,1 +1,2 @@
-export { validatePhone, validateName, validateRegFormPromo } from './validateRegFormPromo';
+export { validateRegFormPromo } from './validateRegFormPromo';
+export { validateRegFormSuccess } from './validateRegFormSuccess';

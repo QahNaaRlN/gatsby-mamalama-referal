@@ -1,13 +1,13 @@
 import { graphql, useStaticQuery } from "gatsby";
 import { useMemo } from "react";
 
-import { validateRegFormPromo } from "@entities/registration/lib";
+import { validateRegFormSuccess } from "@entities/registration/lib";
 import { useProcessData } from "@shared/hooks/useProcessData";
 import { getCurrentDomain } from "@shared/lib/domain";
 
-import { RegFormPromo } from "../model/types";
+import { RegFormSuccess } from "../model/types";
 
-interface RegFormPromoContent {
+interface RegFormSuccessContent {
   documentId: string;
   site?: {
     domain: string;
@@ -18,24 +18,24 @@ interface RegFormPromoContent {
 
 interface GraphQLResponse {
   strapi: {
-    registrationFormPromoContents: RegFormPromoContent[];
+    registrationFormSuccessContents: RegFormSuccessContent[];
   };
 }
 
-export const useRegistration = () => {
+export const useRegistrationSuccess = () => {
   const domain = getCurrentDomain();
 
   const data = useStaticQuery<GraphQLResponse>(graphql`
-    query RegFormPromoQuery {
+    query RegFormSuccessQuery {
       strapi {
-        registrationFormPromoContents {
+        registrationFormSuccessContents {
           documentId
           site {
             domain
             siteName
             discount
           }
-          ...RegFormPromoFields
+          ...RegFormSuccessFields
         }
       }
     }
@@ -43,16 +43,16 @@ export const useRegistration = () => {
 
   // Выносим обработку данных в отдельный useMemo
   const processedData = useMemo(() => {
-    const formattedData = data.strapi.registrationFormPromoContents.map((item) => {
-      return validateRegFormPromo(item);
+    const formattedData = data.strapi.registrationFormSuccessContents.map((item) => {
+      return validateRegFormSuccess(item);
     });
 
     // Фильтрация по домену
     return domain
       ? formattedData.filter((item) => item.site?.domain === domain)
       : formattedData;
-  }, [data.strapi.registrationFormPromoContents, domain]);
+  }, [data.strapi.registrationFormSuccessContents, domain]);
 
   // Используем упрощенный useProcessData только для обработки ошибок
-  return useProcessData<RegFormPromo>(processedData);
+  return useProcessData<RegFormSuccess>(processedData);
 };

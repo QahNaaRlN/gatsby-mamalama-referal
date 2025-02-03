@@ -9,6 +9,22 @@ export const regFormPromoFields = graphql`
     site {
       domain
       siteName
+      discount
+    }
+  }
+`;
+
+export const regFormSuccessFields = graphql`
+  fragment RegFormSuccessFields on Strapi_RegistrationFormSuccessContent {
+    documentId
+    title
+    subtitle
+    description
+    link
+    site {
+      domain
+      siteName
+      discount
     }
   }
 `;

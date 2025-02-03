@@ -6,30 +6,13 @@ interface UseProcessDataResult<T> {
   loading: boolean;
 }
 
-interface RawDataItem<T> {
-  documentId: string;
-  site?: {
-    domain: string;
-    siteName: string;
-  };
-  additionalData: T;
-}
-
 export const useProcessData = <T>(
-  rawData: RawDataItem<T>[],
-  validate: (data: T) => T,
-  domain?: string
+  data: T[]
 ): UseProcessDataResult<T> => {
   return useMemo(() => {
     try {
-      const filteredData = domain
-        ? rawData.filter((item) => item.site?.domain === domain)
-        : rawData;
-
-      const validatedData = filteredData.map((item) => validate(item.additionalData));
-
       return {
-        data: validatedData,
+        data,
         error: null,
         loading: false
       };
@@ -40,5 +23,5 @@ export const useProcessData = <T>(
         loading: false
       };
     }
-  }, [rawData, validate, domain]);
+  }, [data]);
 };

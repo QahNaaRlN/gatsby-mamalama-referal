@@ -1,0 +1,1 @@
+export { RegistrationFormPromo } from './RegistrationFormPromo';

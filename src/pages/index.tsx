@@ -7,17 +7,20 @@ import { Layout } from "@widgets/layout";
 import { RegistrationSection } from "@widgets/registration-section/ui/RegistrationSection";
 import { ServiceSection } from "@widgets/service-section/ui/ServiceSection/ServiceSection";
 
-import type { HomePageData } from "./model/types";
+import "@app/styles";
 
-import '@app/styles';
-
-
+export interface HomePageData {
+  site: {
+    siteMetadata: {
+      title: string;
+    };
+  };
+}
 
 const HomePage: React.FC<PageProps<HomePageData>> = () => {
-
   return (
     <Layout>
-      <RegistrationSection/>
+      <RegistrationSection />
       <ServiceSection />
       <ConditionsSection />
       <FAQSection />
@@ -27,4 +30,4 @@ const HomePage: React.FC<PageProps<HomePageData>> = () => {
 
 export default HomePage;
 
-export const Head: HeadFC = () => <title>Mamalama Referal</title>;
+export const Head: HeadFC = () => <title>Mamalama Referral</title>;

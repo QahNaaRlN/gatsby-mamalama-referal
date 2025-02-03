@@ -23,7 +23,7 @@ const config: GatsbyConfig = {
       options: {
         typeName: 'Strapi',
         fieldName: 'strapi',
-        url: `${process.env.STRAPI_API_URL}/graphql` || 'http://localhost:1337/graphql',
+        url: process.env.STRAPI_API_URL ? `${process.env.STRAPI_API_URL}/graphql` : 'http://localhost:1337/graphql',
         headers: {
           Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
         },
@@ -65,6 +65,19 @@ const config: GatsbyConfig = {
       options: {
         name: "fonts",
         path: path.resolve(__dirname, "src/shared/assets/fonts"),
+      },
+    },
+
+    {
+      resolve: 'gatsby-plugin-postcss',
+      options: {
+        postCssPlugins: [],
+        cssLoaderOptions: {
+          esModule: false,
+          modules: {
+            namedExport: false,
+          },
+        },
       },
     },
 

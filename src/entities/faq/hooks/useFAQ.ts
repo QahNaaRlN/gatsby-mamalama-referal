@@ -1,11 +1,15 @@
-import { useStaticQuery, graphql } from 'gatsby';
+import { graphql, useStaticQuery } from "gatsby";
+import { useMemo } from "react";
 
 import { FAQ, validateFAQ } from "@entities/faq";
-import { useProcessData } from '@shared/hooks/useProcessData';
-import { getCurrentDomain } from '@shared/lib/domain';
+import { useProcessData } from "@shared/hooks/useProcessData";
+import { getCurrentDomain } from "@shared/lib/domain";
 
 interface FAQContent {
   documentId: string;
+  question: string;
+  answer: string;
+  isExpanded: boolean;
   site?: {
     domain: string;
     siteName: string;
@@ -36,14 +40,18 @@ export const useFAQ = () => {
     }
   `);
 
-  const formattedData = data.strapi.faqContents.map((item) => {
-    const validatedData = validateFAQ(item);
-    return {
-      documentId: item.documentId,
-      site: item.site,
-      additionalData: validatedData,
-    };
-  });
+  // Выносим обработку данных в отдельный useMemo
+  const processedData = useMemo(() => {
+    const formattedData = data.strapi.faqContents.map((item) => {
+      return validateFAQ(item);
+    });
 
-  return useProcessData<FAQ>(formattedData, validateFAQ, domain);
+    // Фильтрация по домену
+    return domain
+      ? formattedData.filter((item) => item.site?.domain === domain)
+      : formattedData;
+  }, [data.strapi.faqContents, domain]);
+
+  // Используем упрощенный useProcessData только для обработки ошибок
+  return useProcessData<FAQ>(processedData);
 };

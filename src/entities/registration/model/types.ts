@@ -9,6 +9,23 @@ export interface RegFormPromo {
   site: {
     domain: string;
     siteName: string;
+    discount: string;
+  };
+}
+
+export interface RegFormSuccess {
+  documentId: string;
+  title: string;
+  subtitle?: string;
+  description?: object;
+  link?: string;
+  registrationFormSuccess: {
+    documentId: string;
+  };
+  site: {
+    domain: string;
+    siteName: string;
+    discount: string;
   };
 }
 

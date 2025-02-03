@@ -1,1 +1,1 @@
-export { regFormPromoFields } from './fragments';
+export { regFormPromoFields, regFormSuccessFields } from './fragments';
