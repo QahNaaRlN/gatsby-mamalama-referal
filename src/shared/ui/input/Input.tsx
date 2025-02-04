@@ -1,10 +1,10 @@
-import React, { forwardRef, InputHTMLAttributes } from 'react';
-import InputMask from 'react-input-mask';
-import { twMerge } from 'tailwind-merge';
+import React, { forwardRef, InputHTMLAttributes } from "react";
+import InputMask from "react-input-mask";
+import { twMerge } from "tailwind-merge";
 
 /**
  * @typedef {Object} InputProps
- * @extends {Omit<InputHTMLAttributes<HTMLInputElement>, 'size'>}
+ * @extends {Omit<InputHTMLAttributes<HTMLInputElement>, "size">}
  * @property {string} [mask] - Маска для форматирования вводимых данных. Например: "+7 (999) 999-99-99" для телефона
  */
 
@@ -44,6 +44,7 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
    * @example "99.99.9999" // маска для даты
    */
   mask?: string;
+  error?: string;
 }
 
 /**
@@ -57,13 +58,15 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
                                                                  className,
                                                                  mask,
                                                                  disabled,
+                                                                 error,
                                                                  ...props
                                                                }, ref) => {
   /**
    * Базовые стили компонента с использованием Tailwind CSS
    */
   const inputStyles = twMerge(
-    'w-full py-3 bg-white rounded-xl shadow-custom border border-slate-300 justify-start items-start gap-2 inline-flex px-3 hover:border-teal-700 focus:border-teal-700 focus-visible:border-teal-700 active:border-teal-700 focus-visible:outline-none',
+    "w-full py-3 bg-white rounded-xl shadow-custom border justify-start items-start gap-2 inline-flex px-3 hover:border-teal-700 focus:border-teal-700 focus-visible:border-teal-700 active:border-teal-700 focus-visible:outline-none",
+    error ? "border-red-500" : "border-slate-300",
     className
   );
 
@@ -96,5 +99,4 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({
   );
 });
 
-// Добавляем отображаемое имя компонента для улучшения отладки
-Input.displayName = 'Input';
+Input.displayName = "Input";

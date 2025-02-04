@@ -67,7 +67,7 @@ export const RegistrationFormPromo: React.FC<RegistrationPromoProps> = ({
 
   return (
     <div className="container relative z-10">
-      <div className="flex flex-col md:flex-row items-center justify-between mt-12 md:mt-0 gap-y-16 md:gap-y-0">
+      <div className="flex flex-col lg:flex-row items-center justify-between mt-12 lg:mt-0 gap-y-16 lg:gap-y-0">
         <div className="max-w-[43.75rem] basis-auto text-center md:text-justify">
           <h2 className="mb-6 text-xl md:text-3xl font-medium leading-normal text-blue-700">
             {title}

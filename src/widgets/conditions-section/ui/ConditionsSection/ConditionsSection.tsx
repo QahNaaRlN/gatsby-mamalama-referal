@@ -5,9 +5,9 @@ import { ConditionsCards } from "@features/conditions/ui";
 export const ConditionsSection: React.FC = () => {
 
   return (
-    <section className="py-16">
+    <section className="py-8 md:py-16">
       <div className="container">
-        <h2 className="mb-10 text-4xl font-medium leading-snug text-neutral-900">
+        <h2 className="mb-10 text-2xl md:text-4xl text-center md:text-justify font-medium leading-snug text-neutral-900">
           Условия акции
         </h2>
         <ConditionsCards />

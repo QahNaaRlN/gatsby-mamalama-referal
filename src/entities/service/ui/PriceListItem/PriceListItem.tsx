@@ -25,7 +25,7 @@ export const PriceListItem: React.FC<PriceListItemProps> = ({
                                                             }: PriceListItemProps) => {
   return (
     <div className="flex items-start justify-between border-b border-teal-700 pb-3.5">
-    <span className="basis-56 text-lg font-normal leading-relaxed tracking-tight text-neutral-900">
+    <span className="basis-44 lg:basis-56 text-base md:text-lg font-normal leading-relaxed tracking-tight text-neutral-900">
       {title}
     </span>
       <PriceDisplay price={price} discount={discount} finalPrice={finalPrice} />

@@ -1,12 +1,12 @@
 import React from "react";
 
 import { ConditionsCardProps } from "@entities/conditions/model/types";
-import { renderRichText } from "@lib/renderRichText/renderRichText";
+import { MemoizedRichTextRenderer } from "@lib/renderRichText/renderRichText";
 
 /**
  * Компонент карточки условий акции
  */
-export const ConditionsCard: React.FC<ConditionsCardProps> = ({ conditions }) => {
+export const ConditionsCard: React.FC<ConditionsCardProps> = React.memo(({ conditions }) => {
 
   const {
     title,
@@ -20,7 +20,9 @@ export const ConditionsCard: React.FC<ConditionsCardProps> = ({ conditions }) =>
         {title}
       </h4>
       <div className="text-base font-normal leading-snug text-neutral-900"
-      >{renderRichText(description)}</div>
+      ><MemoizedRichTextRenderer content={description} /></div>
     </div>
   );
-};
+});
+
+ConditionsCard.displayName = 'ConditionsCard';

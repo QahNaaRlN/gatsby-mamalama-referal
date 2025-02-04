@@ -2,40 +2,32 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-    /* Здесь могут быть базовые стили */
-}
-
 @layer components {
-    .btn-primary {
-        @apply bg-teal-700 text-white hover:bg-blue-700 focus:ring-blue-500;
-    }
+	.btn-primary {
+		@apply bg-teal-700 text-white hover:bg-blue-700 focus:ring-blue-500;
+	}
 
-    .btn-secondary {
-        @apply bg-gray-600 text-white hover:bg-gray-700 focus:ring-gray-500;
-    }
+	.btn-secondary {
+		@apply bg-gray-600 text-white hover:bg-gray-700 focus:ring-gray-500;
+	}
 
-    .btn-outline {
-        @apply border-2 border-blue-600 text-blue-600 hover:bg-blue-50 focus:ring-blue-500;
-    }
+	.btn-outline {
+		@apply border-2 border-blue-600 text-blue-600 hover:bg-blue-50 focus:ring-blue-500;
+	}
 
-    .btn-ghost {
-        @apply text-blue-600 hover:bg-blue-50 focus:ring-blue-500;
-    }
+	.btn-ghost {
+		@apply text-blue-600 hover:bg-blue-50 focus:ring-blue-500;
+	}
 
-    .btn-sm {
-        @apply text-sm px-3 py-1.5;
-    }
+	.btn-sm {
+		@apply text-sm px-3 py-1.5;
+	}
 
-    .btn-md {
-        @apply text-base px-4 py-2;
-    }
+	.btn-md {
+		@apply text-base px-4 py-2;
+	}
 
-    .btn-lg {
-        @apply text-lg leading-relaxed px-6 py-3 tracking-tight;
-    }
-}
-
-@layer utilities {
-    /* Здесь могут быть кастомные утилиты */
+	.btn-lg {
+		@apply text-lg leading-relaxed px-6 py-3 tracking-tight;
+	}
 }

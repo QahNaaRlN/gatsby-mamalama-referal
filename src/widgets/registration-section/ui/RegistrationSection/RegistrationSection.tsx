@@ -1,4 +1,3 @@
-// widgets/RegistrationSection/index.tsx
 import { StaticImage } from "gatsby-plugin-image";
 import React, { useState } from "react";
 import { twMerge } from "tailwind-merge";
@@ -27,7 +26,7 @@ export const RegistrationSection: React.FC<RegistrationSectionProps> = ({
   return (
     <section
       className={twMerge(
-        "relative min-h-dvh overflow-hidden bg-cyan-300 pb-24 flex items-center justify-center",
+        "relative min-h-dvh overflow-hidden bg-cyan-300 pb-12 md:pb-24 flex items-center justify-center",
         className
       )}
     >

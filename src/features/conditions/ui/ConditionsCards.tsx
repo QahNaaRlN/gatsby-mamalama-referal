@@ -31,7 +31,7 @@ export const ConditionsCards: React.FC<ConditionsCardsProps> = () => {
   }
 
   return (
-    <div className="mb-10 flex gap-x-5">
+    <div className="mb-10 flex flex-col md:flex-row gap-y-3 gap-x-5">
       {data.map((conditions) => (
         <ConditionsCard
           key={conditions.documentId}
@@ -41,5 +41,7 @@ export const ConditionsCards: React.FC<ConditionsCardsProps> = () => {
     </div>
   );
 };
+
+ConditionsCards.whyDidYouRender = true;
 
 ConditionsCards.displayName = 'ConditionsCards';

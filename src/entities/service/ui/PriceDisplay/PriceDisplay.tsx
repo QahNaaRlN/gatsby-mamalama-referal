@@ -48,7 +48,7 @@ export const PriceDisplay: React.FC<PriceDisplayProps> = ({
                                                           }: PriceDisplayProps): JSX.Element => {
   return (
     <div className="flex flex-col gap-y-1">
-      <span className="text-2xl font-semibold leading-snug text-teal-700">
+      <span className="text-xl md:text-2xl font-semibold leading-snug text-teal-700">
         {finalPrice} <span className="font-normal">{unit || CURRENCY}</span>
       </span>
       {discount && (

@@ -53,21 +53,19 @@ export const RegForm: React.FC<RegFormProps> = ({ trackId, onSuccess, site }) =>
           <h3 className="hidden md:block mb-8 text-3xl font-semibold leading-snug text-neutral-900">
             Заполните форму
           </h3>
-          <div className="space-y-2">
+          <div className="relative flex flex-col">
             <Input
               value={phone}
               onChange={updateField("phone")}
               error={phoneError}
               mask="+7 (999) 999-99-99"
               placeholder="+7 (___) ___-__-__"
-              size="md"
-              fullWidth
             />
             {phoneError && (
-              <span className="text-sm text-red-500">{phoneError}</span>
+              <span className="absolute -bottom-5 mt-2 text-sm text-red-500">{phoneError}</span>
             )}
           </div>
-          <div className="space-y-2">
+          <div className="relative flex flex-col">
             <Input
               value={name || ""}
               onChange={handleNameChange}
@@ -75,7 +73,7 @@ export const RegForm: React.FC<RegFormProps> = ({ trackId, onSuccess, site }) =>
               error={nameError || localNameError}
             />
             {(nameError || localNameError) && !localNameError.includes(nameError || "") && (
-              <span className="text-sm text-red-500">{nameError || localNameError}</span>
+              <span className="absolute -bottom-5 mt-2 text-sm text-red-500">{nameError || localNameError}</span>
             )}
           </div>
           <Button
@@ -100,7 +98,7 @@ export const RegForm: React.FC<RegFormProps> = ({ trackId, onSuccess, site }) =>
         </>
       ) : (
         <>
-          <div className="space-y-2">
+          <div className="relative flex flex-col">
             <Input
               value={code}
               onChange={updateField("code")}
@@ -109,7 +107,7 @@ export const RegForm: React.FC<RegFormProps> = ({ trackId, onSuccess, site }) =>
               mask="9999"
             />
             {codeError && (
-              <span className="text-sm text-red-500">{codeError}</span>
+              <span className="absolute -bottom-5 mt-2 text-sm text-red-500">{codeError}</span>
             )}
           </div>
           <Button

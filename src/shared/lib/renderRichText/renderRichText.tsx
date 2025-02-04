@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 
 export interface TextNode {
   type: 'text';
@@ -33,32 +33,44 @@ type Variables = {
   [key: string]: string | VariableConfig;
 }
 
-/**
- * Проверяет, является ли значение конфигурацией переменной
- */
+interface RichTextRendererProps {
+  content: RichTextNode | RichTextNode[] | unknown;
+  variables?: Variables;
+}
+
+const cache = {
+  variables: new WeakMap<Variables, Map<string, (string | JSX.Element)[]>>(),
+  nodes: new WeakMap<object, RichTextNode | RichTextNode[]>(),
+  rendered: new Map<number, WeakMap<object, JSX.Element>>()
+};
+
 const isVariableConfig = (value: string | VariableConfig): value is VariableConfig => {
   return typeof value === 'object' && 'value' in value;
 };
 
-/**
- * Заменяет переменные в тексте с поддержкой форматирования
- */
-const replaceVariablesWithFormatting = (text: string, variables: Variables): (string | JSX.Element)[] => {
+const memoizedReplaceVariables = (text: string, variables: Variables): (string | JSX.Element)[] => {
+  let variableCache = cache.variables.get(variables);
+  if (!variableCache) {
+    variableCache = new Map();
+    cache.variables.set(variables, variableCache);
+  }
+
+  const cacheKey = text;
+  const cached = variableCache.get(cacheKey);
+  if (cached) return cached;
+
   const parts: (string | JSX.Element)[] = [];
   let currentIndex = 0;
 
-  // Ищем все переменные в тексте с двойными скобками {{ variable }}
   Object.entries(variables).forEach(([key, config]) => {
     const placeholder = `{{ ${key} }}`;
     const index = text.indexOf(placeholder, currentIndex);
 
     if (index !== -1) {
-      // Добавляем текст до переменной
       if (index > currentIndex) {
         parts.push(text.substring(currentIndex, index));
       }
 
-      // Добавляем переменную с форматированием или без
       if (isVariableConfig(config) && config.render) {
         parts.push(config.render(config.value));
       } else {
@@ -70,59 +82,64 @@ const replaceVariablesWithFormatting = (text: string, variables: Variables): (st
     }
   });
 
-  // Добавляем оставшийся текст
   if (currentIndex < text.length) {
     parts.push(text.substring(currentIndex));
   }
 
+  variableCache.set(cacheKey, parts);
   return parts;
 };
 
-/**
- * Обрабатывает узел Rich Text
- */
-const processNode = (node: RichTextNode, variables: Variables): RichTextNode | RichTextNode[] => {
+const memoizedProcessNode = (node: RichTextNode, variables: Variables): RichTextNode | RichTextNode[] => {
+  if (!node || typeof node !== 'object') return node;
+
+  const cached = cache.nodes.get(node);
+  if (cached) return cached;
+
+  let result: RichTextNode | RichTextNode[];
+
   switch (node.type) {
     case 'text': {
-      const parts = replaceVariablesWithFormatting(node.text, variables);
+      const parts = memoizedReplaceVariables(node.text, variables);
 
-      // Если нет форматированных частей, возвращаем обычный текстовый узел
       if (parts.length === 1 && typeof parts[0] === 'string') {
-        return { ...node, text: parts[0] };
+        result = { ...node, text: parts[0] };
+      } else {
+        result = parts.map((part, index) => {
+          if (typeof part === 'string') {
+            return { type: 'text', text: part } as TextNode;
+          }
+          return {
+            type: 'custom',
+            content: part,
+            key: `formatted-${index}`
+          } as CustomNode;
+        });
       }
-
-      // Создаем массив узлов для каждой части
-      return parts.map((part, index) => {
-        if (typeof part === 'string') {
-          return { type: 'text', text: part } as TextNode;
-        }
-        // Для JSX элементов создаем специальный узел
-        return {
-          type: 'custom',
-          content: part,
-          key: `formatted-${index}`
-        } as CustomNode;
-      });
+      break;
     }
     case 'paragraph':
     case 'link':
-      return {
+      result = {
         ...node,
         children: node.children.flatMap(child =>
-          isRichTextNode(child) ? processNode(child, variables) : [child]
+          isRichTextNode(child) ? memoizedProcessNode(child, variables) : [child]
         )
       };
+      break;
     default:
-      return node;
+      result = node;
   }
+
+  cache.nodes.set(node, result);
+  return result;
 };
 
-/**
- * Проверяет, является ли узел узлом Rich Text
- */
 function isRichTextNode(node: any): node is RichTextNode {
   return (
     node &&
+    typeof node === 'object' &&
+    'type' in node &&
     (node.type === 'text' || node.type === 'paragraph' || node.type === 'link' || node.type === 'custom') &&
     (node.type === 'custom' ? 'content' in node :
       node.type !== 'paragraph' && node.type !== 'link' ? true :
@@ -130,54 +147,93 @@ function isRichTextNode(node: any): node is RichTextNode {
   );
 }
 
-/**
- * Рендерит отдельный узел Rich Text
- */
-const renderRichTextNode = (node: unknown, index: number): JSX.Element => {
+const memoizedRenderNode = (node: unknown, index: number): JSX.Element => {
+  if (!node || typeof node !== 'object') {
+    return <React.Fragment key={index} />;
+  }
+
+  // Получаем кэш для текущего индекса
+  let indexCache = cache.rendered.get(index);
+  if (!indexCache) {
+    indexCache = new WeakMap();
+    cache.rendered.set(index, indexCache);
+  }
+
+  // Проверяем кэш
+  const cached = indexCache.get(node as object);
+  if (cached) {
+    return cached;
+  }
+
+  let result: JSX.Element;
+
   if (isRichTextNode(node)) {
     switch (node.type) {
       case 'paragraph':
-        return <p key={index}>{renderRichText(node.children)}</p>;
+        result = <p key={index}>{renderRichText(node.children)}</p>;
+        break;
       case 'text':
-        return <span key={index}>{node.text}</span>;
+        result = <span key={index}>{node.text}</span>;
+        break;
       case 'link':
-        return (
+        result = (
           <a key={index} href={node.url} target="_blank" rel="noopener noreferrer">
             {renderRichText(node.children)}
           </a>
         );
+        break;
       case 'custom':
-        return React.cloneElement((node as any).content, { key: index });
+        result = React.cloneElement(node.content, { key: index });
+        break;
       default:
-        return <React.Fragment key={index} />;
+        result = <React.Fragment key={index} />;
     }
+  } else {
+    result = <React.Fragment key={index} />;
   }
 
-  return <React.Fragment key={index} />;
+  // Сохраняем в кэш
+  indexCache.set(node as object, result);
+  return result;
 };
 
-/**
- * Рендерит Rich Text с поддержкой переменных и форматирования
- * @param content Контент Rich Text
- * @param variables Объект с переменными для замены и их форматированием
- */
+interface RichTextRendererProps {
+  content: RichTextNode | RichTextNode[] | unknown;
+  variables?: Variables;
+}
+
+const RichTextRenderer: React.FC<RichTextRendererProps> = ({ content, variables = {} }) => {
+  const renderedContent = useMemo(() => {
+    if (!content) return [];
+
+    if (Array.isArray(content)) {
+      return content.map((item, index) =>
+        memoizedRenderNode(
+          isRichTextNode(item) ? memoizedProcessNode(item, variables) : item,
+          index
+        )
+      );
+    }
+
+    return [memoizedRenderNode(
+      isRichTextNode(content) ? memoizedProcessNode(content, variables) : content,
+      0
+    )];
+  }, [content, variables]);
+
+  return <>{renderedContent}</>;
+};
+
+RichTextRenderer.displayName = 'RichTextRenderer';
+
 export const renderRichText = (
   content: RichTextNode | RichTextNode[] | unknown,
   variables: Variables = {}
 ): JSX.Element[] => {
-  if (!content) return [];
-
-  if (Array.isArray(content)) {
-    return content.map((item, index) =>
-      renderRichTextNode(
-        isRichTextNode(item) ? processNode(item, variables) : item,
-        index
-      )
-    );
-  }
-
-  return [renderRichTextNode(
-    isRichTextNode(content) ? processNode(content, variables) : content,
-    0
-  )];
+  return React.createElement(RichTextRenderer, {
+    content,
+    variables
+  }) as unknown as JSX.Element[];
 };
+
+export const MemoizedRichTextRenderer = React.memo(RichTextRenderer);

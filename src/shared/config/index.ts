@@ -1,0 +1,1 @@
+export { domains } from "./domains";

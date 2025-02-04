@@ -42,18 +42,18 @@ export const RegistrationFormSuccess: React.FC = () => {
               render: (value) => (
                 <div
                   className="inline-flex items-center justify-start gap-1.5 rounded-[2rem] border-b border-r border-purple-450 bg-purple-300 px-4 py-1">
-                    <span className="text-4xl font-semibold text-neutral-900">
-                      {value}
+                    <span className="text-2xl md:text-4xl font-semibold text-neutral-900">
+                      {value} ₸
                     </span>
                 </div>
               ),
             },
           })}
         </div>
-        <h2 className="mb-8 text-5xl font-semibold leading-tight text-neutral-900">
+        <h2 className="mb-8 text-3xl md:text-5xl font-semibold leading-tight text-neutral-900">
           {title}
         </h2>
-        <p className="text-neutral-900 text-xl mb-9 font-normal leading-relaxed">{subtitle}</p>
+        <p className="text-neutral-900 text-lg md:text-xl mb-9 font-normal leading-relaxed">{subtitle}</p>
         <a
           href={link}
           className="inline-flex items-center justify-center rounded-lg bg-blue-700 px-8 py-4 text-base font-semibold text-white transition-colors hover:bg-blue-800"

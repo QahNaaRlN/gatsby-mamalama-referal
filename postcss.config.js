@@ -3,4 +3,7 @@ module.exports = {
     tailwindcss: {},
     autoprefixer: {},
   },
+  watchOptions: {
+    ignored: "**/globals.css"
+  }
 }

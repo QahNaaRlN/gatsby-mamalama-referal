@@ -15,7 +15,7 @@ const config: GatsbyConfig = {
     description: `Description of your site`,
     author: `@yourusername`,
   },
-  graphqlTypegen: true,
+  graphqlTypegen: false,
   plugins: [
     // GraphQL API
     {
@@ -68,6 +68,7 @@ const config: GatsbyConfig = {
       },
     },
 
+    // PostCss
     {
       resolve: 'gatsby-plugin-postcss',
       options: {

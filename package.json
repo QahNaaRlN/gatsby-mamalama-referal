@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "develop": "gatsby develop",
-    "start": "gatsby clean && gatsby develop",
+    "start": "gatsby clean && gatsby develop --verbose",
     "build": "gatsby build",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
@@ -20,6 +20,7 @@
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
     "@types/react-input-mask": "^3.0.6",
+    "@welldone-software/why-did-you-render": "^8.0.3",
     "autoprefixer": "^10.4.20",
     "clsx": "^2.1.1",
     "dompurify": "^3.2.3",

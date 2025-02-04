@@ -8,3 +8,4 @@ export { ReactComponent as TShirtIcon } from "./t-shirt.svg";
 export { ReactComponent as TowelIcon } from "./towel.svg";
 export { ReactComponent as WashingMachineIcon } from "./washing-machine.svg";
 export { ReactComponent as LogoFooterIcon } from "./logo-footer.svg";
+export { ReactComponent as DefaultServiceIcon } from "./default-service-icon.svg";

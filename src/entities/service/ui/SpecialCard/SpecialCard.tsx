@@ -22,7 +22,7 @@ export const SpecialCard: React.FC<SpecialCardProps> = ({ service }) => {
   return (
     <div className="relative inline-flex flex-col items-start justify-start gap-5 rounded-3xl bg-white px-6 pb-8 pt-9 shadow-custom lg:row-span-2">
       <div className="flex items-center gap-x-2">
-        <h3 className="text-2xl font-semibold leading-tight text-teal-700">
+        <h3 className="text-lg md:text-2xl font-semibold leading-tight text-teal-700">
           {title}
         </h3>
         {duration && (
