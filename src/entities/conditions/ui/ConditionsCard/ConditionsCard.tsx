@@ -4,7 +4,11 @@ import { ConditionsCardProps } from "@entities/conditions/model/types";
 import { MemoizedRichTextRenderer } from "@lib/renderRichText/renderRichText";
 
 /**
- * Компонент карточки условий акции
+ * Компонент для отображения карточки условий акции
+ * @component
+ * @param {ConditionsCardProps} props - Пропсы компонента
+ * @param {ConditionBase} props.conditions - Данные об условиях акции
+ * @returns {JSX.Element} Карточка с заголовком и описанием условий
  */
 export const ConditionsCard: React.FC<ConditionsCardProps> = React.memo(({ conditions }) => {
 

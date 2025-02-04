@@ -1,3 +1,7 @@
+/**
+ * @fileoverview Этот файл содержит фрагмент GraphQL для сущности Strapi_ConditionContent.
+ * Он определяет поля, которые будут использоваться в запросах GraphQL.
+ */
 import { graphql } from "gatsby";
 
 export const conditionFields = graphql`
