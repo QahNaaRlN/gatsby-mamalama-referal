@@ -4,6 +4,16 @@ import { useRegistrationForm } from "@entities/registration/hooks/useRegistratio
 import { Button } from "@ui/button";
 import { Input } from "@ui/input";
 
+/**
+ * Интерфейс пропсов компонента формы регистрации
+ * @interface RegFormProps
+ * @property {string} [trackId] - Идентификатор отслеживания
+ * @property {Function} onSuccess - Callback успешной регистрации
+ * @property {object} site - Информация о сайте
+ * @property {string} site.domain - Домен сайта
+ * @property {string} site.siteName - Название сайта
+ * @property {string} site.discount - Размер скидки
+ */
 export interface RegFormProps {
   trackId?: string;
   onSuccess: () => void;
@@ -14,6 +24,32 @@ export interface RegFormProps {
   };
 }
 
+/**
+ * Компонент формы регистрации
+ *
+ * @description
+ * Компонент отображает форму регистрации с двумя состояниями:
+ * 1. Форма ввода телефона и имени
+ * 2. Форма ввода кода подтверждения (после успешной отправки данных)
+ *
+ * Включает:
+ * - Валидацию полей в реальном времени
+ * - Маску ввода для телефона и кода
+ * - Обработку ошибок
+ * - Отображение состояния загрузки
+ * - Ссылку на пользовательское соглашение
+ *
+ * @component
+ * @param {RegFormProps} props - Пропсы компонента
+ * @returns {JSX.Element} Форма регистрации
+ *
+ * @example
+ * <RegForm
+ *   trackId="123"
+ *   onSuccess={() => console.log('Success')}
+ *   site={{ domain: 'example.com', siteName: 'Example', discount: '10%' }}
+ * />
+ */
 export const RegForm: React.FC<RegFormProps> = ({ trackId, onSuccess, site }) => {
   const {
     state: {
@@ -34,6 +70,10 @@ export const RegForm: React.FC<RegFormProps> = ({ trackId, onSuccess, site }) =>
 
   const [localNameError, setLocalNameError] = useState<string>("");
 
+  /**
+   * Обработчик изменения поля имени с валидацией
+   * @param {React.ChangeEvent<HTMLInputElement>} e - Событие изменения
+   */
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     const regex = /^[А-Яа-яЁё\s-]*$/;

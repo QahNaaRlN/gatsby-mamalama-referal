@@ -1,4 +1,16 @@
-export * from "./model";
-export * from "./hooks";
+/**
+ * Экспорт всех компонентов фичи
+ * @module FAQ
+ */
+
+/** Экспорт API-интерфейсов */
 export * from "./api";
+
+/** Экспорт моделей данных */
+export * from "./model";
+
+/** Экспорт хуков */
+export * from "./hooks";
+
+/** Экспорт вспомогательных функций */
 export * from "./lib";

@@ -6,22 +6,50 @@ import { renderRichText } from "@shared/lib/renderRichText/renderRichText";
 import { ErrorMessage } from "@shared/ui/error";
 import { Spinner } from "@shared/ui/spinner";
 
+/**
+ * Интерфейс пропсов компонента формы регистрации промо-акции
+ * @interface RegistrationPromoProps
+ * @property {Function} onSuccess - Callback-функция, вызываемая после успешной регистрации
+ */
 interface RegistrationPromoProps {
   onSuccess: () => void;
 }
 
+/**
+ * Компонент формы регистрации для промо-акции
+ *
+ * @description
+ * Этот компонент выполняет следующие функции:
+ * 1. Отображает форму регистрации с промо-информацией
+ * 2. Обрабатывает состояния загрузки и ошибок
+ * 3. Показывает сообщение об успешной регистрации
+ * 4. Рендерит промо-контент с динамическими данными
+ *
+ * @component
+ * @param {RegistrationPromoProps} props - Пропсы компонента
+ * @param {Function} props.onSuccess - Callback после успешной регистрации
+ *
+ * @returns {JSX.Element} Компонент формы регистрации с промо-информацией
+ *
+ * @example
+ * const handleSuccess = () => {
+ *   console.log('Registration successful');
+ * };
+ *
+ * return (
+ *   <RegistrationFormPromo onSuccess={handleSuccess} />
+ * );
+ */
 export const RegistrationFormPromo: React.FC<RegistrationPromoProps> = ({
-                                                                      onSuccess
-                                                                    }) => {
+                                                                          onSuccess
+                                                                        }) => {
   const { data, error, loading } = useRegistration();
   const [isRegistered, setIsRegistered] = useState(false);
 
-  // Если данные еще загружаются, показываем спиннер
   if (loading) {
     return <Spinner />;
   }
 
-  // Если произошла ошибка, показываем сообщение об ошибке
   if (error || !data || data.length === 0) {
     return (
       <ErrorMessage
@@ -47,7 +75,6 @@ export const RegistrationFormPromo: React.FC<RegistrationPromoProps> = ({
     onSuccess();
   };
 
-  // Рендер финального состояния после регистрации
   if (isRegistered) {
     return (
       <div className="container relative z-10">

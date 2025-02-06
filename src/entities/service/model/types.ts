@@ -6,57 +6,75 @@ import { type ServiceType as ServiceTypeEnum } from './consts';
 
 /**
  * Интерфейс для файла загрузки
+ *
+ * @interface UploadFile
+ * @description
+ * Описывает структуру файла, загруженного через Strapi Media Library
+ *
+ * @property {Record<string, unknown>} formats - Форматы изображения (thumbnail, small, medium, large)
+ * @property {string} name - Имя файла
+ * @property {string} mime - MIME-тип файла (например, "image/jpeg")
+ * @property {number} size - Размер файла в байтах
+ * @property {string} url - URL файла для доступа
+ * @property {number} width - Ширина изображения в пикселях
+ * @property {number} height - Высота изображения в пикселях
+ * @property {string} alternativeText - Альтернативный текст для изображения
  */
 export interface UploadFile {
-  /** Форматы изображения */
   formats: Record<string, unknown>;
-  /** Имя файла */
   name: string;
-  /** MIME-тип файла */
   mime: string;
-  /** Размер файла */
   size: number;
-  /** URL файла */
   url: string;
-  /** Ширина изображения */
   width: number;
-  /** Высота изображения */
   height: number;
-  /** Альтернатиыный текст */
-  alternativeText: string
+  alternativeText: string;
 }
 
 /**
  * Интерфейс для элемента прайс-листа
+ *
+ * @interface PriceListItem
+ * @description
+ * Описывает структуру отдельной позиции в прайс-листе специального сервиса
+ *
+ * @property {string} id - Идентификатор элемента
+ * @property {string} title - Название услуги
+ * @property {number} price - Базовая цена до скидки
+ * @property {number} [discount] - Размер скидки в валюте (опционально)
+ * @property {number} finalPrice - Финальная цена с учетом скидки
+ * @property {string} [unit] - Единица измерения (например, "шт", "м²")
  */
 export interface PriceListItem {
-  /** Идентификатор элемента */
   id: string;
-  /** Название услуги */
   title: string;
-  /** Базовая цена */
   price: number;
-  /** Скидка (опционально) */
   discount?: number;
-  /** Финальная цена с учетом скидки */
   finalPrice: number;
-  /** Единица измерения (опционально) */
   unit?: string;
 }
 
 /**
  * Базовый интерфейс сервиса с общими полями
+ *
+ * @interface ServiceBase
+ * @description
+ * Описывает общие поля для всех типов сервисов
+ *
+ * @property {string} documentId - Уникальный идентификатор документа в Strapi
+ * @property {string} title - Название сервиса
+ * @property {object} description - Описание сервиса в формате rich text
+ * @property {number} duration - Длительность выполнения в днях
+ * @property {ServiceTypeEnum} type - Тип сервиса (standard или special)
+ * @property {object} site - Информация о сайте
+ * @property {string} site.domain - Домен сайта
+ * @property {string} site.siteName - Название сайта
  */
 interface ServiceBase {
-  /** Идентификатор документа */
   documentId: string;
-  /** Название сервиса */
   title: string;
-  /** Описание сервиса */
   description: object;
-  /** Длительность в днях */
   duration: number;
-  /** Тип сервиса */
   type: ServiceTypeEnum;
   site: {
     domain: string;
@@ -66,47 +84,79 @@ interface ServiceBase {
 
 /**
  * Интерфейс стандартного сервиса
+ *
+ * @interface StandardService
+ * @description
+ * Описывает сервис с фиксированной ценой
+ *
+ * @extends {ServiceBase}
+ * @property {number} price - Базовая цена сервиса
+ * @property {number} [discount] - Размер скидки в валюте
+ * @property {number} [percentageDiscount] - Процент скидки
+ * @property {number} finalPrice - Финальная цена с учетом скидки
+ * @property {string} [unit] - Единица измерения
+ * @property {UploadFile} picture - Изображение сервиса
+ * @property {string} [pictureClassnames] - CSS классы для стилизации изображения
  */
 export interface StandardService extends ServiceBase {
-  /** Базовая цена */
   price: number;
-  /** Скидка */
   discount?: number;
-  /** Процент скидки */
   percentageDiscount?: number;
-  /** Финальная цена */
   finalPrice: number;
-  /** Единица измерения */
   unit?: string;
-  /** Изображение сервиса */
   picture: UploadFile;
-  /** Дополнительные классы для изображения */
   pictureClassnames?: string;
 }
 
 /**
  * Интерфейс специального сервиса
+ *
+ * @interface SpecialService
+ * @description
+ * Описывает сервис с несколькими вариантами цен
+ *
+ * @extends {ServiceBase}
+ * @property {PriceListItem[]} priceList - Массив вариантов цен
+ * @property {UploadFile} picture - Изображение сервиса
+ * @property {string} [pictureClassnames] - CSS классы для стилизации изображения
  */
 export interface SpecialService extends ServiceBase {
-  /** Список цен */
   priceList: PriceListItem[];
-  /** Изображение сервиса */
   picture: UploadFile;
-  /** Дополнительные классы для изображения */
   pictureClassnames?: string;
 }
 
-/** Объединенный тип сервиса */
+/**
+ * Объединенный тип сервиса
+ *
+ * @typedef {StandardService | SpecialService} Service
+ * @description
+ * Union тип, представляющий все возможные варианты сервиса
+ */
 export type Service = StandardService | SpecialService;
 
-/** Пропсы для компонента стандартной карточки */
+/**
+ * Пропсы для компонента стандартной карточки
+ *
+ * @interface StandardCardProps
+ * @description
+ * Пропсы для компонента, отображающего карточку стандартного сервиса
+ *
+ * @property {StandardService} service - Данные стандартного сервиса
+ */
 export interface StandardCardProps {
-  /** Данные сервиса */
   service: StandardService;
 }
 
-/** Пропсы для компонента специальной карточки */
+/**
+ * Пропсы для компонента специальной карточки
+ *
+ * @interface SpecialCardProps
+ * @description
+ * Пропсы для компонента, отображающего карточку специального сервиса
+ *
+ * @property {SpecialService} service - Данные специального сервиса
+ */
 export interface SpecialCardProps {
-  /** Данные сервиса */
   service: SpecialService;
 }

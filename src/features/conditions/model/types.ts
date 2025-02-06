@@ -1,7 +1,13 @@
 /**
- * Пропсы компонента списка условий
+ * Типы компонента ConditionsCards
+ * @module ConditionsCards
+ */
+
+/**
+ * Интерфейс пропсов компонента ConditionsCards
+ * @interface ConditionsCardsProps
+ * @property {string} [className] - Дополнительный CSS класс
  */
 export interface ConditionsCardsProps {
-  /** Дополнительный CSS класс */
   className?: string
 }

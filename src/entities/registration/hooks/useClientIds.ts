@@ -15,3 +15,4 @@ export const useClientIds = () => {
 
   return { yandexClientId, roistatClientId, googleClientId };
 };
+// TODO перенести функционал из проекта vue в текущий проект, написать логику получения clientId

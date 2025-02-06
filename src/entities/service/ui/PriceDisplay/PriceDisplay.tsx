@@ -1,44 +1,36 @@
+/**
+ * Компонент для отображения цены с опциональными единицами измерения и скидкой
+ * @module PriceDisplay
+ */
+
 import React from "react";
 
 import { CURRENCY } from "@entities/service/model";
 
 /**
- * Interface for the properties of the PriceDisplay component.
- * @interface
+ * Интерфейс пропсов компонента PriceDisplay
+ * @interface PriceDisplayProps
+ * @property {number} price - Исходная цена
+ * @property {string} [unit] - Единица измерения (например, "₸/kg")
+ * @property {number} [discount] - Размер скидки
+ * @property {number} [finalPrice] - Финальная цена после применения скидки
  */
 export interface PriceDisplayProps {
-  /**
-   * The price to be displayed.
-   * @type {number}
-   */
   price: number;
-
-  /**
-   * The unit of measurement (e.g., "₸/kg").
-   * @type {string}
-   * @optional
-   */
   unit?: string;
-
-  /**
-   * The discount percentage.
-   * @type {number}
-   * @optional
-   */
   discount?: number;
-
-  /**
-   * The final price.
-   * @type {number}
-   * @optional
-   */
   finalPrice?: number;
 }
 
 /**
- * A React component for displaying a price with optional unit and discount.
- * @param {PriceDisplayProps} props - The properties for the component.
- * @returns {JSX.Element} The rendered component.
+ * Компонент для отображения цены с возможностью показа скидки
+ * @component
+ * @param {PriceDisplayProps} props - Пропсы компонента
+ * @param {number} props.price - Исходная цена
+ * @param {number} [props.finalPrice] - Финальная цена после применения скидки
+ * @param {string} [props.unit] - Единица измерения
+ * @param {number} [props.discount] - Размер скидки
+ * @returns {JSX.Element} Компонент с отображением цены
  */
 export const PriceDisplay: React.FC<PriceDisplayProps> = ({
                                                             price,

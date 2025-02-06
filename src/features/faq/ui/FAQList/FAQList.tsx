@@ -1,3 +1,8 @@
+/**
+ * Компонент списка FAQ
+ * @module FAQList
+ */
+
 import { ChevronDown } from "lucide-react";
 import React, { useState, useCallback, useMemo } from "react";
 
@@ -8,6 +13,12 @@ import { FAQListProps } from "@features/faq/model";
 import { ErrorMessage } from "@ui/error";
 import { Spinner } from "@ui/spinner";
 
+/**
+ * Компонент для отображения списка часто задаваемых вопросов
+ * @component
+ * @param {FAQListProps} props - Пропсы компонента
+ * @returns {JSX.Element} Список FAQ с раскрывающимися ответами
+ */
 export const FAQList: React.FC<FAQListProps> = React.memo(() => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 

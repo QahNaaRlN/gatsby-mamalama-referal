@@ -1,3 +1,8 @@
+/**
+ * Публичный API компонентов сервиса
+ * @module ServiceComponents
+ */
+
 export { ServiceCard } from './ServiceCard';
 export { SpecialCard } from './SpecialCard';
 export { StandardCard } from './StandardCard';

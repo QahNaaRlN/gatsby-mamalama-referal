@@ -11,11 +11,22 @@ import { type ServiceCardsProps } from '@features/service/model/types';
 import { ErrorMessage } from '@ui/error';
 import { Spinner } from '@ui/spinner';
 
-
 /**
- * Компонент отображает сетку карточек сервисов, сгруппированных по типу.
- * Специальные сервисы отображаются первыми, за ними следуют стандартные сервисы.
- * В процессе загрузки показывает спиннер, при ошибке - сообщение об ошибке.
+ * Компонент сетки карточек сервисов
+ *
+ * @description
+ * Компонент выполняет:
+ * - Загрузку данных сервисов через хук useServices
+ * - Группировку сервисов по типам (специальные/стандартные)
+ * - Отображение сетки карточек с адаптивной версткой
+ * - Обработку состояний загрузки и ошибок
+ *
+ * @component
+ * @param {ServiceCardsProps} props - Пропсы компонента
+ * @returns {JSX.Element} Сетка карточек сервисов
+ *
+ * @example
+ * return <ServiceCards />;
  */
 export const ServiceCards: React.FC<ServiceCardsProps> = () => {
   const { data, error, loading } = useServices();

@@ -1,6 +1,6 @@
 /**
- * Экспорт функции валидации условий
- * @module validateCondition
- * @see validateCondition
+ * @file Экспортирует функции валидации условий
+ * @module entities/conditions/lib/validation
  */
+
 export { validateCondition } from "./validateCondition";

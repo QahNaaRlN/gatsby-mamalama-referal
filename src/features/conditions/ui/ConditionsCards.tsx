@@ -1,5 +1,6 @@
 /**
- * @fileoverview Компонент для отображения сетки условий
+ * Компонент для отображения сетки условий
+ * @module ConditionsCards
  */
 
 import React from "react";
@@ -10,10 +11,16 @@ import { ConditionsCardsProps } from '@features/conditions/model/types';
 import { ErrorMessage } from '@ui/error';
 import { Spinner } from '@ui/spinner';
 
-
 /**
- * Компонент отображает сетку карточек условий.
- * В процессе загрузки показывает спиннер, при ошибке - сообщение об ошибке.
+ * Компонент сетки карточек условий
+ * @component
+ * @param {ConditionsCardsProps} props - Пропсы компонента
+ * @returns {JSX.Element} Сетка карточек, спиннер загрузки или сообщение об ошибке
+ *
+ * @example
+ * return (
+ *   <ConditionsCards />
+ * );
  */
 export const ConditionsCards: React.FC<ConditionsCardsProps> = () => {
   const { data, error, loading } = useConditions();

@@ -1,5 +1,4 @@
 import {
-  ValidationError,
   validateIsObject,
   validateStringField,
   validateRichTextField,
@@ -8,12 +7,33 @@ import {
 
 import { RegFormSuccess } from '../model/types';
 
+/**
+ * Функция валидации объекта успешной регистрации
+ *
+ * @description
+ * Функция проверяет:
+ * - Наличие и корректность обязательных полей (documentId, title)
+ * - Опциональные поля (subtitle, description, link)
+ * - Наличие и корректность объекта site с полями domain, siteName и discount
+ *
+ * @param {unknown} data - Проверяемый объект формы успешной регистрации
+ * @throws {ValidationError} Если объект не соответствует требованиям
+ * @returns {RegFormSuccess} Валидированный объект формы
+ *
+ * @example
+ * try {
+ *   const validatedData = validateRegFormSuccess(formData);
+ * } catch (error) {
+ *   if (error instanceof ValidationError) {
+ *     console.error('Validation failed:', error.message);
+ *   }
+ * }
+ */
 export const validateRegFormSuccess = (data: unknown): RegFormSuccess => {
   validateIsObject(data, 'RegFormSuccess');
 
   const success = data as Partial<RegFormSuccess>;
 
-  // Валидация основных полей
   validateStringField(success.documentId, 'documentId');
   validateStringField(success.title, 'title');
 
@@ -29,16 +49,10 @@ export const validateRegFormSuccess = (data: unknown): RegFormSuccess => {
     validateStringField(success.link, 'link');
   }
 
-  // Валидация site
   validateIsObject(success.site, 'site');
-
-  if (!success.site || typeof success.site !== 'object') {
-    throw new ValidationError('RegFormSuccess must have a site object');
-  }
-
-  validateStringField(success.site.domain, 'site.domain');
-  validateStringField(success.site.siteName, 'site.siteName');
-  validateNumberField(success.site.discount, 'site.discount');
+  validateStringField(success.site?.domain, 'site.domain');
+  validateStringField(success.site?.siteName, 'site.siteName');
+  validateNumberField(success.site?.discount, 'site.discount');
 
   return success as RegFormSuccess;
 };

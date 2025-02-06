@@ -7,6 +7,15 @@ import { Icon } from "@ui/icon";
 
 /**
  * Компонент специальной карточки сервиса с прайс-листом
+ * @component
+ * @param {SpecialCardProps} props - Пропсы компонента
+ * @param {Object} props.service - Данные сервиса
+ * @param {string} props.service.title - Название сервиса
+ * @param {Object} props.service.picture - Изображение сервиса
+ * @param {Array} props.service.priceList - Список цен
+ * @param {number} [props.service.duration] - Длительность в днях
+ * @param {string} props.service.pictureClassnames - CSS классы для изображения
+ * @returns {JSX.Element} Карточка специального сервиса
  */
 export const SpecialCard: React.FC<SpecialCardProps> = ({ service }) => {
   const {
@@ -15,7 +24,7 @@ export const SpecialCard: React.FC<SpecialCardProps> = ({ service }) => {
     priceList,
     duration,
     pictureClassnames
-  } = service
+  } = service;
 
   const imageUrl = picture?.url ? getStrapiUrl(picture.url) : '/default-service-icon.svg';
 
@@ -40,12 +49,12 @@ export const SpecialCard: React.FC<SpecialCardProps> = ({ service }) => {
       ))}
 
       <Icon
-        src={ imageUrl }
-        alt={ picture.alternativeText }
-        className={ pictureClassnames }
+        src={imageUrl}
+        alt={picture.alternativeText}
+        className={pictureClassnames}
         width={picture.width}
         height={picture.height}
       />
     </div>
-  )
-}
+  );
+};

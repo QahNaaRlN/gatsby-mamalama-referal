@@ -1,24 +1,30 @@
-/**
- * @fileoverview Обновленные компоненты карточек сервисов для работы с плоской структурой данных
- */
-
 import React from "react";
 
-
-import { CURRENCY } from '@entities/service/model/consts'
-import { type StandardCardProps } from '@entities/service/model/types'
-import { DiscountBadge } from '@entities/service/ui/DiscountBadge'
-import { PriceDisplay } from '@entities/service/ui/PriceDisplay'
+import { CURRENCY } from '@entities/service/model/consts';
+import { type StandardCardProps } from '@entities/service/model/types';
+import { DiscountBadge } from '@entities/service/ui/DiscountBadge';
+import { PriceDisplay } from '@entities/service/ui/PriceDisplay';
 import { MemoizedRichTextRenderer } from "@lib/renderRichText/renderRichText";
 import { getStrapiUrl } from "@lib/strapi/media";
-import { Icon } from '@ui/icon'
-
+import { Icon } from '@ui/icon';
 
 /**
  * Компонент стандартной карточки сервиса
+ * @component
+ * @param {StandardCardProps} props - Пропсы компонента
+ * @param {Object} props.service - Данные сервиса
+ * @param {string} props.service.title - Название сервиса
+ * @param {Object} props.service.description - Описание сервиса
+ * @param {number} props.service.price - Цена без скидки
+ * @param {number} [props.service.discount] - Размер скидки
+ * @param {number} props.service.finalPrice - Итоговая цена
+ * @param {string} [props.service.unit] - Единица измерения
+ * @param {number} [props.service.percentageDiscount] - Процент скидки
+ * @param {Object} props.service.picture - Изображение сервиса
+ * @param {string} props.service.pictureClassnames - CSS классы для изображения
+ * @returns {JSX.Element} Стандартная карточка сервиса
  */
 export const StandardCard: React.FC<StandardCardProps> = ({ service }) => {
-
   const {
     title,
     description,
@@ -29,7 +35,7 @@ export const StandardCard: React.FC<StandardCardProps> = ({ service }) => {
     percentageDiscount,
     picture,
     pictureClassnames
-  } = service
+  } = service;
 
   const imageUrl = picture?.url ? getStrapiUrl(picture.url) : '/default-service-icon.svg';
 
@@ -39,9 +45,9 @@ export const StandardCard: React.FC<StandardCardProps> = ({ service }) => {
     <div className="inline-flex flex-col items-start justify-start md:gap-5 rounded-3xl bg-white px-6 pb-8 pt-7 shadow-custom">
       <div className="relative mb-5 md:mb-0">
         <Icon
-          src={ imageUrl }
-          alt={ picture.alternativeText }
-          className={ pictureClassnames }
+          src={imageUrl}
+          alt={picture.alternativeText}
+          className={pictureClassnames}
           width={picture.width}
           height={picture.height}
         />
@@ -63,5 +69,5 @@ export const StandardCard: React.FC<StandardCardProps> = ({ service }) => {
         price={price}
       />
     </div>
-  )
-}
+  );
+};

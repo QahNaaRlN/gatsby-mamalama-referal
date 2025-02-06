@@ -3,6 +3,19 @@ import React, { useState } from "react";
 import { useClientIds } from "@entities/registration/hooks/useClientIds";
 import { useUTM } from "@entities/registration/hooks/useUTM";
 
+/**
+ * Интерфейс состояния формы регистрации
+ * @interface RegistrationFormState
+ * @property {string} phone - Номер телефона
+ * @property {string} name - Имя пользователя
+ * @property {string} code - Код подтверждения
+ * @property {boolean} codeSent - Флаг отправки кода
+ * @property {boolean} isSending - Флаг процесса отправки данных
+ * @property {boolean} isVerifying - Флаг процесса верификации
+ * @property {string} [phoneError] - Ошибка валидации телефона
+ * @property {string} [nameError] - Ошибка валидации имени
+ * @property {string} [codeError] - Ошибка валидации кода
+ */
 interface RegistrationFormState {
   phone: string;
   name: string;
@@ -15,6 +28,15 @@ interface RegistrationFormState {
   codeError?: string;
 }
 
+/**
+ * Интерфейс пропсов хука формы регистрации
+ * @interface UseRegistrationFormProps
+ * @property {string} [trackId] - Идентификатор отслеживания
+ * @property {Function} onSuccess - Callback успешной регистрации
+ * @property {object} site - Информация о сайте
+ * @property {string} site.domain - Домен сайта
+ * @property {string} site.siteName - Название сайта
+ */
 interface UseRegistrationFormProps {
   trackId?: string;
   onSuccess: () => void;
@@ -24,6 +46,27 @@ interface UseRegistrationFormProps {
   };
 }
 
+/**
+ * Хук для управления формой регистрации
+ *
+ * @description
+ * Этот хук предоставляет логику для:
+ * 1. Управления состоянием формы регистрации
+ * 2. Валидации полей формы (телефон, имя, код)
+ * 3. Отправки данных на сервер
+ * 4. Верификации кода подтверждения
+ * 5. Интеграции с системами аналитики
+ *
+ * @param {UseRegistrationFormProps} props - Параметры инициализации формы
+ * @returns {Object} Объект с состоянием и методами управления формой
+ *
+ * @example
+ * const { state, handleSubmit, handleVerify, updateField } = useRegistrationForm({
+ *   trackId: 'track123',
+ *   onSuccess: () => console.log('Success'),
+ *   site: { domain: 'example.com', siteName: 'Example' }
+ * });
+ */
 export const useRegistrationForm = ({ trackId, onSuccess, site }: UseRegistrationFormProps) => {
   const [state, setState] = useState<RegistrationFormState>({
     phone: '',

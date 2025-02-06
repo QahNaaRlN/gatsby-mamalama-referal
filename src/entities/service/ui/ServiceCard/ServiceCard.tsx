@@ -6,16 +6,29 @@ import { SpecialCard } from "../SpecialCard";
 import { StandardCard } from "../StandardCard";
 
 /**
- * Компонент-маршрутизатор для карточек сервисов
+ * Пропсы компонента ServiceCard
+ * @interface ServiceCardProps
+ * @property {Service} service - Данные сервиса
  */
-export const ServiceCard: React.FC<{ service: Service }> = ({ service }) => {
-  if (isSpecialService(service)) {
-    return <SpecialCard service={service} />
-  }
-
-  return <StandardCard service={service} />
+interface ServiceCardProps {
+  service: Service;
 }
 
-StandardCard.displayName = 'StandardCard'
-SpecialCard.displayName = 'SpecialCard'
-ServiceCard.displayName = 'ServiceCard'
+/**
+ * Компонент-маршрутизатор для карточек сервисов
+ * @component
+ * @param {ServiceCardProps} props - Пропсы компонента
+ * @param {Service} props.service - Объект с данными сервиса
+ * @returns {JSX.Element} Компонент SpecialCard или StandardCard в зависимости от типа сервиса
+ */
+export const ServiceCard: React.FC<ServiceCardProps> = ({ service }) => {
+  if (isSpecialService(service)) {
+    return <SpecialCard service={service} />;
+  }
+
+  return <StandardCard service={service} />;
+};
+
+StandardCard.displayName = 'StandardCard';
+SpecialCard.displayName = 'SpecialCard';
+ServiceCard.displayName = 'ServiceCard';

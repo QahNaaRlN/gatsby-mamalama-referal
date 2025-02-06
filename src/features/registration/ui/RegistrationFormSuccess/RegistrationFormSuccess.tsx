@@ -5,6 +5,21 @@ import { renderRichText } from "@lib/renderRichText/renderRichText";
 import { ErrorMessage } from "@shared/ui/error";
 import { Spinner } from "@shared/ui/spinner";
 
+/**
+ * Компонент успешной регистрации формы
+ *
+ * @description
+ * Отображает информацию после успешной регистрации:
+ * - Размер доступной скидки
+ * - Заголовок и подзаголовок
+ * - Ссылку на пункты выдачи
+ *
+ * @component
+ * @returns {JSX.Element} Компонент с информацией об успешной регистрации
+ *
+ * @example
+ * return <RegistrationFormSuccess />;
+ */
 export const RegistrationFormSuccess: React.FC = () => {
   const { data, error, loading } = useRegistrationSuccess();
 

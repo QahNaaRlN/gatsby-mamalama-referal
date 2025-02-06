@@ -1,7 +1,12 @@
 import { FAQ } from "@entities/faq";
 import { ValidationError } from '@shared/lib/validation';
 
-
+/**
+ * Функция валидации объекта FAQ
+ * @param {unknown} faq - Проверяемый объект FAQ
+ * @throws {ValidationError} Если объект не соответствует требованиям
+ * @returns {FAQ} Валидированный объект FAQ
+ */
 export const validateFAQ = (faq: unknown): FAQ => {
   if (!faq || typeof faq !== 'object') {
     throw new ValidationError('FAQ must be an object');
